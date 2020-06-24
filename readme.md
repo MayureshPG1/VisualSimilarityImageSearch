@@ -78,11 +78,11 @@ Implements above mentioned basic algorithm.
 
 *Let's make test execution even more faster at test time*
 
-Now, instead of finding first K matches with test image. Can we precompute the distances.
+ - Now, instead of finding first K matches with test image. Can we precompute the distances.
 
-Thus, we now compute cosine distance of every single image in database with every other image and store it as a table.
+ - Thus, we now compute cosine distance of every single image in database with every other image and store it as a table.
 
-So at runtime; we just have to load the table find top 10 matching by simply traicing the table.
+ - So at runtime; we just have to load the table find top 10 matchings by simply traicing the table.
 
 ### Optimization Results
 
