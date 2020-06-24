@@ -4,9 +4,10 @@
 
 Fashion dataset taken from myntra.com (Indian e-commerce website)
 
-https://www.kaggle.com/paramaggarwal/fashion-product-images-dataset
+[Large Dataset 15GB](https://www.kaggle.com/paramaggarwal/fashion-product-images-dataset)
 
-https://www.kaggle.com/paramaggarwal/fashion-product-images-small
+[Small Dataset](https://www.kaggle.com/paramaggarwal/fashion-product-images-small)
+
 
 ### Problem Statement
 
@@ -96,27 +97,21 @@ For a batch of 100 test images following are the average execution time for each
 
 ### Literature reffered
 
-  - My implementation is based on following paper: http://cs231n.stanford.edu/reports/2015/pdfs/nealk_final_report.pdf
-  - https://medium.com/de-bijenkorf-techblog/image-vector-representations-an-overview-of-ways-to-search-visually-similar-images-3f5729e72d07
-    - Good overview of though process behind arriving at using pre-trained CNN based model.
-  - https://www.oreilly.com/library/view/practical-deep-learning/9781492034858/ch04.html
-    - Similar approach using ResNet
-  - https://labs.pinterest.com/user/themes/pin_labs/assets/paper/visual_search_at_pinterest.pdf
-    - Visual similarity detection at Pinterest
+  - My implementation is based on [following paper](http://cs231n.stanford.edu/reports/2015/pdfs/nealk_final_report.pdf)
+  - [Good overview](https://medium.com/de-bijenkorf-techblog/image-vector-representations-an-overview-of-ways-to-search-visually-similar-images-3f5729e72d07) of though process behind arriving at using pre-trained CNN based model.
+  - [Similar approach](https://www.oreilly.com/library/view/practical-deep-learning/9781492034858/ch04.html) using ResNet. 
+  - Visual similarity detection at [Pinterest](https://labs.pinterest.com/user/themes/pin_labs/assets/paper/visual_search_at_pinterest.pdf)
     - Their entire network is quite complicated. But, to find visual similarity they use a similar approach.
         > Training a full CNN to learn a
       good representation can be time-consuming and requires a
       very large corpus of data. We apply transfer learning to
       our model by retaining the low-level visual representations
       from models trained for other computer vision tasks.
-  - https://www.cv-foundation.org/openaccess/content_iccv_2015/papers/Huang_Cross-Domain_Image_Retrieval_ICCV_2015_paper.pdf
-    - Did not used this paper as it uses labelling data along with visual similarity
+  - Did not used [this paper](https://www.cv-foundation.org/openaccess/content_iccv_2015/papers/Huang_Cross-Domain_Image_Retrieval_ICCV_2015_paper.pdf) as it uses labelling data along with visual similarity
     - But, gained some insights about fashion datasets and visual analysis related to clothing
-  - http://acberg.com/papers/wheretobuyit2015iccv.pdf
-    - Their problem domain is different. They are figuring cloths for shop and general photos.
+  - [This paper's](http://acberg.com/papers/wheretobuyit2015iccv.pdf) problem domain is different. They are figuring cloths for shop and general photos.
     - But, They demonstrated that cosine based distances work the bast. So, I ended up using them.
-  - https://blog.griddynamics.com/reverse-image-search-with-convolutional-neural-networks/
-    - Did not used this approach. This one requires 3 input images query, positive and negative.
+  - Did not used [this approach](https://blog.griddynamics.com/reverse-image-search-with-convolutional-neural-networks/). This one requires 3 input images query, positive and negative.
     - Thought that asking 3 input images to the user is not intuitive.
     
 ### Why Not GAN based approach
