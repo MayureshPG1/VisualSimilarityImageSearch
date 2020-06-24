@@ -94,7 +94,36 @@ For a batch of 100 test images following are the average execution time for each
 | V_2.0      | 9 millisecond      |  922x faster |
 | V_3.0 | 4 millisecond      |    2.25x faster |
 
+### Why Not GAN based approach
 
+- Basically there are 2 steps in solving visual similarity problem
+  1. calculating feature vectors for database images
+  2. Finding closest images to test images with use of some kind of distance. (Euclidian, cosine etc)
+ - The GAN network solves first step by using very complicated network.
+  - i.e. you've to train two CNN networks
+  - These 2 networks are in feedback loop with each other
+  - Eventually going through this network we produce a similar feature vector
+  - It is not proven anywhere in the paper that this GAN feature vector is better than feature vector calculated by other methods.
+ - Most importently in terms of precision; according to paper itself.
+  - GAN approach achieves 0.84 precision
+  - But at the same time other methods give very close results
+    - VGG10(0.81), ResNet101(0.8), ResNet152(0.82)
+    - *Thus with so much added complexity GAN results are not significantly better.*
+  - Also, it's obivious that difference in precision of different CNN models will very based input dataset
+    - As these models are trained on different dataset. So it's always a guess how generic filters are of a specific CNN model for your dataset.
+    - You can always train your CNN model with your dataset (in our case fashion).
+    - Or get a pre trained CNN model on a similar dataset. i.e. FashionNet.
+  - There are practical considerations too
+    - From the paper it looks like you must train the GAN network with your dataset.
+      - Which means days to weeks of training effort in multiple epochs
+    - No transfer learning
+      - Meaning we cant do quick prototyping to evaluate the algorithm.
+  - Moreover the precision results claimed are not on some standard dataset. Dataset is curated by authors.
+    - If there was a standard dataset (such as ImageNet challenge etc) then the results can be given more weightage.
+    - Also, results are on one specific dataset. It's note proven that GAN method works best on all different kind of dataset.
+  - While going through methods used by many commercial companies which has commercially solved the visual similarity problem; I noticed that most of them have used pre-trained CNN networks. The only question was which on.
+    
+ Thus the additional complexity of implementation and being not sure about precision results I decided not to implement GAN paper.
 
 ### Notes
 
