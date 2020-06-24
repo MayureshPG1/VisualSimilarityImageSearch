@@ -94,6 +94,31 @@ For a batch of 100 test images following are the average execution time for each
 | V_2.0      | 9 millisecond      |  922x faster |
 | V_3.0 | 4 millisecond      |    2.25x faster |
 
+### Literature reffered
+
+  - My implementation is based on following paper: http://cs231n.stanford.edu/reports/2015/pdfs/nealk_final_report.pdf
+  - https://medium.com/de-bijenkorf-techblog/image-vector-representations-an-overview-of-ways-to-search-visually-similar-images-3f5729e72d07
+    - Good overview of though process behind arriving at using pre-trained CNN based model.
+  - https://www.oreilly.com/library/view/practical-deep-learning/9781492034858/ch04.html
+    - Similar approach using ResNet
+  - https://labs.pinterest.com/user/themes/pin_labs/assets/paper/visual_search_at_pinterest.pdf
+    - Visual similarity detection at Pinterest
+    - Their entire network is quite complicated. But, to find visual similarity they use a similar approach.
+        > Training a full CNN to learn a
+      good representation can be time-consuming and requires a
+      very large corpus of data. We apply transfer learning to
+      our model by retaining the low-level visual representations
+      from models trained for other computer vision tasks.
+  - https://www.cv-foundation.org/openaccess/content_iccv_2015/papers/Huang_Cross-Domain_Image_Retrieval_ICCV_2015_paper.pdf
+    - Did not used this paper as it uses labelling data along with visual similarity
+    - But, gained some insights about fashion datasets and visual analysis related to clothing
+  - http://acberg.com/papers/wheretobuyit2015iccv.pdf
+    - Their problem domain is different. They are figuring cloths for shop and general photos.
+    - But, They demonstrated that cosine based distances work the bast. So, I ended up using them.
+  - https://blog.griddynamics.com/reverse-image-search-with-convolutional-neural-networks/
+    - Did not used this approach. This one requires 3 input images query, positive and negative.
+    - Thought that asking 3 input images to the user is not intuitive.
+    
 ### Why Not GAN based approach
 
 - Basically there are 2 steps in solving visual similarity problem
@@ -121,7 +146,7 @@ For a batch of 100 test images following are the average execution time for each
   - Moreover the precision results claimed are not on some standard dataset. Dataset is curated by authors.
     - If there was a standard dataset (such as ImageNet challenge etc) then the results can be given more weightage.
     - Also, results are on one specific dataset. It's note proven that GAN method works best on all different kind of dataset.
-  - While going through methods used by many commercial companies which has commercially solved the visual similarity problem; I noticed that most of them have used pre-trained CNN networks. The only question was which on.
+  - While going through methods used by many commercial companies which has commercially solved the visual similarity problem; I noticed that most of them have used pre-trained CNN networks. The only question was which one.
     
  Thus the additional complexity of implementation and being not sure about precision results I decided not to implement GAN paper.
 
