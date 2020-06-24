@@ -152,9 +152,17 @@ For a batch of 100 test images following are the average execution time for each
 
 ### Notes
 
-It's much better to craft this problem as finding closest image from given dataset.
-
-This allows hugh performance gains. Also, it's more practical problem. i.e. I'm an e-commerce website. I search for white shirt with design and below my algorithm suggest 10 best matching T-shirts.
-
-Also, all images from dataset is considered as input images. There is no training, validation and test that in this problem modelling.
+  - It's much better to craft this problem as finding closest image from given dataset.
+    - This allows hugh performance gains. Also, it's more practical problem. i.e. User in on an e-commerce website. User searches for white shirt with design and below my algorithm suggest 10 best matching T-shirts.
+    - Also, all images from dataset is considered as input images. There is no training, validation and test data kind of problem modelling.
 We are using pre-trained model and getting image's feature vectors from that model.
+  - I was also unable to load 15GB database. So, I used small dataset.
+  - For small dataset also I was able to upto max 10K images. Trying further made the system crash.
+  - My laptop has no GPU. Will need a GPU machine to scale up the results.
+### Future work and Optimizations
+
+ - Use a high end GPU or hire cloud GPU's to speed up the training process.
+ - We can calculate the precision of out prediction using labelled data. i.e. for white-male-design-shirt all outputs of similar images must match the label.
+  - But, some papers do mention that visual similarity as a subjective problem and using labels may not be best answer.
+ - Also as size of data increase (e.g. 100K images to compare). We need to recheck if V_2.0 approach is better or V_3.0 approach is better.
+  
