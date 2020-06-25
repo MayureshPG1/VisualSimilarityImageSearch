@@ -1,4 +1,6 @@
-#### This project is a solution to the visual similarity-based image search
+## Visual similarity-based image search
+
+--------------
 
 ### Dataset Provided
 
@@ -8,6 +10,7 @@ Fashion dataset is taken from myntra.com (Indian e-commerce website)
 
 [Small Dataset](https://www.kaggle.com/paramaggarwal/fashion-product-images-small)
 
+--------------
 
 ### Problem Statement
 
@@ -36,6 +39,8 @@ I've used model trained on ImageNet as its a very wide dataset with 1000 output 
 
 So, I am essentially planning to use transfer learning from a pre-trained network. Get image feature vectors and use a KNN like classifier to find K nearest similar images to a given test image.
 
+--------------
+
 ### Tech stack
 
 I've used the following tech stack:
@@ -44,6 +49,8 @@ I've used the following tech stack:
 - Python (Very good with 2d,3d data processing and a lot of other libraries available)
 - Numpy, Pandas, PIL, sklearn, etc (For performing low-level tasks)
 - Jupyter Notebook. (Easy to present and visualize code)
+
+--------------
 
 ### Design
 
@@ -61,7 +68,9 @@ Following is a pseudo algorithm:
 - Pass this test feature vector to the KNN model. It returns the first 10 best matching feature vectors.
 - Display test and matching images with scores.
 
-### Optimizations
+--------------
+
+### Code Optimizations
 
 **V_1.0** 
 Implements above mentioned basic algorithm.
@@ -85,6 +94,8 @@ Implements above mentioned basic algorithm.
 
  - Now at runtime; we just have to load the table find top 10 matchings by simply tracing the table.
 
+--------------
+
 ### Optimization Results
 
 For a batch of 100 test images following are the average execution time for each version of the algorithm.
@@ -94,6 +105,8 @@ For a batch of 100 test images following are the average execution time for each
 | V_1.0      | 8.3 Seconds | - |
 | V_2.0      | 9 millisecond      |  922x faster |
 | V_3.0 | 4 millisecond      |    2.25x faster |
+
+--------------
 
 ### Literature reffered
 
@@ -114,6 +127,8 @@ For a batch of 100 test images following are the average execution time for each
   - Did not used [this approach](https://blog.griddynamics.com/reverse-image-search-with-convolutional-neural-networks/). This one requires 3 input images query, positive and negative.
     - I thought that asking 3 input images to the user is not intuitive.
     
+--------------
+
 ### Why Not GAN based approach
 
 [Reference Paper](https://www.researchgate.net/publication/336728075_A_Visual_Similarity_Recommendation_System_using_Generative_Adversarial_Networks)
@@ -146,6 +161,8 @@ For a batch of 100 test images following are the average execution time for each
     
  Thus the additional complexity of implementation and being not sure about precision results I decided not to implement GAN paper.
 
+--------------
+
 ### Notes
 
   - It's much better to craft this problem as finding the closest image from the given dataset. i.e. Test image is from dataset only.
@@ -156,6 +173,8 @@ We are using a pre-trained model and getting the image's feature vectors from th
   - I was also unable to load a 15GB database. So, I used a small dataset.
   - For the small dataset, I was able to do up to max 10K images. Trying further made the system crash.
   - My laptop has no GPU. We will need a GPU machine to scale up the results.
+
+--------------
 
 ### Future work and Optimizations
 
@@ -168,7 +187,9 @@ I completed what I could in 4 days. But following are the optimizations I could 
  - The dataframe/matrix generated in V_3.0 has a lot of redunduncies. It is calculating cosine distance of all images with each other. So, dataframe[1][5] is same as dataframe[5][1]. i.e. distance between image 1 & 5. 
   - Also, if we know we only need first 'K' matches then we can sort the matrix columnwise and keep first 10 elements with lowest scores only.
  - Use a high-end GPU or hire cloud GPU's to speed up the training process.
- 
+
+--------------
+
 ### How to Run
 
 I've uploaded 3 separate versions of algorithms in jupyter notebook format (ipynb)
@@ -189,4 +210,10 @@ Your system should have following:
  - PIL
  - matplotlib
 
+  Regarding docker:
   
+  - I've used Anaconda for creating my tensorflow environment.
+  - Docker and Anaconda are not really compatible and there are lot of hacks to get them working together.
+  - In retrospect if I eventually had to give an Docker image I should not have used Anaconda.
+  - Working on getting Docker image out of Anaconda environment.
+  - If I could solve this will send Docker image soon.
