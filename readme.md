@@ -159,20 +159,26 @@ We are using a pre-trained model and getting the image's feature vectors from th
 
 ### Future work and Optimizations
 
- - Use a high-end GPU or hire cloud GPU's to speed up the training process.
+I completed what I could in 4 days. But following are the optimizations I could think of.
+
  - We can calculate the precision of our predictions using labeled data.
   - But, some papers do mention that visual similarity as a subjective problem and using labels may not be the best answer.
  - Also as the size of data increase (e.g. 15GB data). We need to recheck if the V_2.0 approach is better or the V_3.0 approach is better.
+ - Parallelism can be used in V_2.0 for large dataset. Instead of finding KNN matches with 100k images, we can split the data and find best matches in small subsets of data.
+ - The dataframe/matrix generated in V_3.0 has a lot of redunduncies. It is calculating cosine distance of all images with each other. So, distance between dataframe[1][5] is same as dataframe[5][1]. i.e. distance between image 1 & 5. 
+  - Also, if we know we only need first 'K' matches then we can sort the matrix columnwise and keep first 10 elements with lowest scores only.
+ - Use a high-end GPU or hire cloud GPU's to speed up the training process.
  
 ### How to Run
 
 I've uploaded 3 separate versions of algorithms in jupyter notebook format (ipynb)
 
 If you open these notebook directly you'll see all the results in them below each code block.
+You can open them in Jupyter Notebook and execute the code blockwise.
 
 I could not upload the saved data for V_2.0 and V_3.0 due to size limit on github. So, I've uploaded them [here](https://1drv.ms/u/s!AiAKI2YLMbz_h6Vz97oijr_iiUNFhw?e=tFHIii) along with dataset.
 
-Download them and keep them in same folder as ipynb notebooks. The code will pick them up. In which case you dont need to run the training code. Run the test code directly, it will load the saved data and run the algorithm.
+Download the data and keep it in the same folder as ipynb notebooks. The code will pick them up. In which case you dont need to run the training code. Run the test code directly, it will load the saved data and run the algorithm.
 
 Your system should have following:
  - Tensorflow
