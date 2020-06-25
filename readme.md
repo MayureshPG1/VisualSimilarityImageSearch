@@ -1,4 +1,4 @@
-## Visual similarity-based image search
+## Visual Similarity Based Image Search
 
 --------------
 
