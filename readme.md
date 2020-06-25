@@ -165,7 +165,7 @@ I completed what I could in 4 days. But following are the optimizations I could 
   - But, some papers do mention that visual similarity as a subjective problem and using labels may not be the best answer.
  - Also as the size of data increase (e.g. 15GB data). We need to recheck if the V_2.0 approach is better or the V_3.0 approach is better.
  - Parallelism can be used in V_2.0 for large dataset. Instead of finding KNN matches with 100k images, we can split the data and find best matches in small subsets of data.
- - The dataframe/matrix generated in V_3.0 has a lot of redunduncies. It is calculating cosine distance of all images with each other. So, distance between dataframe[1][5] is same as dataframe[5][1]. i.e. distance between image 1 & 5. 
+ - The dataframe/matrix generated in V_3.0 has a lot of redunduncies. It is calculating cosine distance of all images with each other. So, dataframe[1][5] is same as dataframe[5][1]. i.e. distance between image 1 & 5. 
   - Also, if we know we only need first 'K' matches then we can sort the matrix columnwise and keep first 10 elements with lowest scores only.
  - Use a high-end GPU or hire cloud GPU's to speed up the training process.
  
