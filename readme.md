@@ -17,6 +17,8 @@ Fashion dataset is taken from myntra.com (Indian e-commerce website)
 Design and implement a system that computes visual similarity. Think of a visual search engine that provides you with similar
 searches when given an image input.
 
+------------------
+
 ### Problem Definition
 
 Here is my thought process:
@@ -99,6 +101,7 @@ Implements above mentioned basic algorithm.
 ### Optimization Results
 
 For a batch of 100 test images following are the average execution time for each version of the algorithm.
+(Results will vary based on input datasize)
 
 | Algorithm        | Avg ext time           | gain  |
 | ------------- |:-------------:| -----:|
