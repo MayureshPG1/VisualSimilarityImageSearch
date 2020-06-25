@@ -26,13 +26,13 @@ Also to find visual similarity, we need an invariant feature vector. (Invariant 
 
 The feature vector is an abstract representation of the image. This vector encodes image data in a more compact and feature-rich manner.
 
-One of the best to get a very good feature vector is to use the last layers of pre-trained Convolutional Neural Network.
+One of the best ways to get a very good feature vector is to use the last layer of pre-trained Convolutional Neural Network.
 
-In CNN's, initial layers represent simple filters detecting edges and curves, etc. And at the last layer, we get the final abstract response of an image to all the filters in all layers.
+In CNN's, initial layers represent simple filters detecting edges and curves, etc. And at the last layer, we get the final abstract response of an image.
 
 I've decided to use VGG16 CNN trained on ImageNet. As its widely used and its weights are available in Keras.
 
-I've used model trained on ImageNet as its a very wide dataset with 1000 output classes. Thus the filters trained on it would be generic enough that our fashion images should produce as very good output response. (If not we've to train VGG with our dataset or use pre-trained datasets such as FashionNet.
+I've used model trained on ImageNet as its a very wide dataset with 1000 output classes. Thus the filters trained on it would be generic enough that our fashion images should produce very good feature vectors. (If not we've to train VGG with our dataset or use pre-trained datasets such as FashionNet.)
 
 So, I am essentially planning to use transfer learning from a pre-trained network. Get image feature vectors and use a KNN like classifier to find K nearest similar images to a given test image.
 
@@ -50,11 +50,11 @@ I've used the following tech stack:
 Following is a pseudo algorithm:
 
 - Load VGG16 model trained on ImageNet.
-- Get the model up to the last layer.
+- Get the last layer of the model.
 - Load images from the database.
-- Preprocess them and make them compatible with the input layer of VGG16.
+- Preprocess images and make them compatible with the input layer of VGG16.
 - Pass each image as an input to the VGG model and store the response of the last layer as an image's feature vector.
-- Give this feature vectors array as an input to the KNN model. Use cosine distance.
+- Pass this feature vectors array as an input to the KNN model. Use cosine distance.
 - Load the Test image.
 - Preprocess the Test image.
 - Load the VGG16 model again and get test image feature vectors.
@@ -69,7 +69,7 @@ Implements above mentioned basic algorithm.
 **V_2.0:**
 *Following are the problems and modification in V_2.0:*
 
-- To execute the code we have to train and extract the feature vectors each time. This takes a long time to check results
+- To execute the code we have to train and extract the feature vectors each time. This takes a long time to check results.
   - Now let's divide to code into training and testing part
 - Let's save the feature vectors and KNN model to the local disk at the end of training and reload it back at the time of testing
   - This will also reduce the number of variables that need to be in memory all the time.
@@ -79,11 +79,11 @@ Implements above mentioned basic algorithm.
 
 *Let's make test execution even faster at test time*
 
- - Now, instead of finding first, K matches with the test image. Can we precompute distances?
+ - Now, instead of finding first K matches with the test image. Can we precompute distances?
 
- - Thus, we now compute the cosine distance of every single image in the database with every other image and store it as a table.
+ - So, we now compute the cosine distance of every single image in the database with every other image and store it as a table.
 
- - So at runtime; we just have to load the table find top 10 matchings by simply tracing the table.
+ - Now at runtime; we just have to load the table find top 10 matchings by simply tracing the table.
 
 ### Optimization Results
 
@@ -110,7 +110,7 @@ For a batch of 100 test images following are the average execution time for each
   - Did not used [this paper](https://www.cv-foundation.org/openaccess/content_iccv_2015/papers/Huang_Cross-Domain_Image_Retrieval_ICCV_2015_paper.pdf) as it uses labeling data along with the visual similarity
     - But, gained some insights about fashion datasets and visual analysis related to clothing
   - [This paper's](http://acberg.com/papers/wheretobuyit2015iccv.pdf) problem domain is different. They are figuring cloths for shop and general photos.
-    - But, They demonstrated that cosine based distances work the bast. So, I ended up using them.
+    - But, they demonstrated that cosine based distances work the bast. So, I ended up using them.
   - Did not used [this approach](https://blog.griddynamics.com/reverse-image-search-with-convolutional-neural-networks/). This one requires 3 input images query, positive and negative.
     - I thought that asking 3 input images to the user is not intuitive.
     
@@ -131,7 +131,7 @@ For a batch of 100 test images following are the average execution time for each
     - VGG10(0.81), ResNet101(0.8), ResNet152(0.82)
     - *Thus with so much added complexity GAN results are not significantly better.*
   - Also, the difference in the precision of different CNN models will vary based input dataset
-    - As these models are trained on a different dataset. So it's always a guess how generic filters are of a specific CNN model for your dataset.
+    - Basically a pre-trained model is trained on specific dataset. Model 'learns' filters based on given dataset. If different dataset is passed to same CNN model results may vary. i.e. we don't know how generic the filters of pre-trained models are.
     - You can always train your CNN model with your dataset (in our case fashion).
     - Or get a pre-trained CNN model on a similar dataset. i.e. FashionNet.
   - There are practical considerations too
@@ -142,14 +142,15 @@ For a batch of 100 test images following are the average execution time for each
   - Moreover, the precision results claimed are not on some standard dataset. Dataset is curated by authors.
     - If there was a standard dataset (such as ImageNet challenge etc) then the results can be given more weightage.
     - Also, results are on one specific dataset. It's not proven that the GAN method works best on all different kinds of datasets.
-  - While going through methods used by many commercial companies that have commercially solved the visual similarity problem; I noticed that most of them have used pre-trained CNN networks. The only question was which one.
+  - While going through methods used by many commercial companies; I noticed that most of them have used pre-trained CNN networks.
     
- Thus the additional complexity of implementation and is not sure about precision results I decided not to implement GAN paper.
+ Thus the additional complexity of implementation and being not sure about precision results I decided not to implement GAN paper.
 
 ### Notes
 
-  - It's much better to craft this problem as finding the closest image from the given dataset.
-    - This allows for huge performance gains. Also, it's a more practical problem. i.e. User in on an e-commerce website. User searches for a white shirt with design and below my algorithm suggest 10 best matching T-shirts.
+  - It's much better to craft this problem as finding the closest image from the given dataset. i.e. Test image is from dataset only.
+    - This allows for huge performance gains. 
+    - Also, it's a more practical formulation. i.e. User in already looking at a shirt on an e-commerce website. The image of shirt is from database only and now we show similar matching images from database.
     - Also, all images from the dataset are considered as input images. There is no training, validation, and test data kind of problem modeling.
 We are using a pre-trained model and getting the image's feature vectors from that model.
   - I was also unable to load a 15GB database. So, I used a small dataset.
@@ -159,7 +160,27 @@ We are using a pre-trained model and getting the image's feature vectors from th
 ### Future work and Optimizations
 
  - Use a high-end GPU or hire cloud GPU's to speed up the training process.
- - We can calculate the precision of our predictions using labeled data. i.e. for white-male-design-shirt, all outputs of similar images must match the label.
+ - We can calculate the precision of our predictions using labeled data.
   - But, some papers do mention that visual similarity as a subjective problem and using labels may not be the best answer.
- - Also as the size of data increase (e.g. 100K images to compare). We need to recheck if the V_2.0 approach is better or the V_3.0 approach is better.
+ - Also as the size of data increase (e.g. 15GB data). We need to recheck if the V_2.0 approach is better or the V_3.0 approach is better.
+ 
+### How to Run
+
+I've uploaded 3 separate versions of algorithms in jupyter notebook format (ipynb)
+
+If you open these notebook directly you'll see all the results in them below each code block.
+
+I could not upload the saved data for V_2.0 and V_3.0 due to size limit on github. So, I've uploaded them [here](https://1drv.ms/u/s!AiAKI2YLMbz_h6Vz97oijr_iiUNFhw?e=tFHIii) along with dataset.
+
+Download them and keep them in same folder as ipynb notebooks. The code will pick them up. In which case you dont need to run the training code. Run the test code directly, it will load the saved data and run the algorithm.
+
+Your system should have following:
+ - Tensorflow
+ - python 3.7
+ - numpy
+ - pandas
+ - sklearn
+ - PIL
+ - matplotlib
+
   
